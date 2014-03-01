@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>51378040-4E76-4C4D-9236-3BCF78F098E8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Buzz Kill</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E81B816B-7AB0-4B4D-8C96-11FE3E01A31B</key>
+		<string>https://github.com/mhuusko5/Buzz-Kill.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Buzz Kill/Buzz Kill.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E81B816B-7AB0-4B4D-8C96-11FE3E01A31B</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/mhuusko5/Buzz-Kill.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E81B816B-7AB0-4B4D-8C96-11FE3E01A31B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E81B816B-7AB0-4B4D-8C96-11FE3E01A31B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Buzz-Kill</string>
+		</dict>
+	</array>
+</dict>
+</plist>
