@@ -149,6 +149,46 @@ $document.on('doClick', function (e) {
     });
 })();
 
+(function touchInput() {
+    function touch(e) {
+        e = e.originalEvent.touches[0];
+
+        if (!clickerDiv.vis) {
+            clickerDiv.css('opacity', 0.81);
+            clickerDiv.vis = true;
+        }
+
+        clicker = {
+            x: e.pageX,
+            y: e.pageY
+        };
+
+        var gameClicker = normalizePointToDiv(clicker, game[0]);
+        clickerDiv.css('left', gameClicker.x - clickerDiv.width() / 2);
+        clickerDiv.css('top', gameClicker.y - clickerDiv.height() / 2);
+
+        gameplayPointerLocationCallback({
+            x: (window.devicePixelRatio || 1.0) * (clicker.x - gameCanvasOffset.x),
+            y: (window.devicePixelRatio || 1.0) * (clicker.y - gameCanvasOffset.y)
+        });
+
+        return false;
+    }
+
+    $document.on('touchstart', touch);
+    $document.on('touchmove', touch);
+
+    $document.on('touchend', function (e) {
+        $document.trigger({
+            type: 'doClick',
+            pageX: e.pageX,
+            pageY: e.pageY
+        });
+
+        return false;
+    });
+})();
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////LEAPINPUT/////////////////////LEAPINPUT/////////////////////LEAPINPUT/////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

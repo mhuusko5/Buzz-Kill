@@ -82,10 +82,18 @@ var $document = $(document);
 var gameSizeRatio = 1.386;
 var game = $('#game');
 (function setupGameDiv() {
-    game.height(window.innerHeight);
-    game.width(game.height() * gameSizeRatio);
-    if (!nodeWebkit) {
-        game.css('left', Math.floor((window.innerWidth - game.width()) / 2) + 'px');
+    if (window.innerWidth / window.innerHeight > 1.386) {
+        game.height(window.innerHeight);
+        game.width(game.height() * gameSizeRatio);
+        if (!nodeWebkit) {
+            game.css('left', Math.floor((window.innerWidth - game.width()) / 2) + 'px');
+        }
+    } else {
+        game.width(window.innerWidth);
+        game.height(game.width() / gameSizeRatio);
+        if (!nodeWebkit) {
+            game.css('top', Math.floor(window.innerHeight - game.height()) + 'px');
+        }
     }
 })();
 

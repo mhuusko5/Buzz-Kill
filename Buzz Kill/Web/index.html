@@ -2,9 +2,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="-1">
     <title>Buzz Kill</title>
-    <meta name="description"
-          content="Jump into a swirling ball of retro nostalgia and bee-blasting fun with Buzz Kill!">
+    <meta name="description" content="Jump into a swirling ball of retro nostalgia and bee-blasting fun with Buzz Kill!">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 
     <script src="resources/jquery-1.9.1.min.js"></script>
@@ -20,7 +21,7 @@
     <link rel="stylesheet" href="resources/Typewriter.css">
     <link rel="stylesheet" href="resources/Portago.css">
 </head>
-<body>
+<body style="background-color: black;">
 
 <div id="gameplayImages" style="display: none;">
 
@@ -213,7 +214,7 @@
     <div id="optionsGameplayButton" style="position: absolute;"></div>
 
     <div id="optionsNewButton" style="position: absolute;"></div>
-    <div id="optionsQuitButton" style="position: absolute;"></div>
+    <div id="optionsQuitButton" style="display: none; position: absolute;"></div>
 
     <div id="optionsShootingMethodButtons" style="position: absolute;">
         <div id="optionsShootingMethodSingleButton" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-image: url(img/navigation/shootingMethodSliderSingle.png);
@@ -305,7 +306,7 @@
 <div id="gameOverlay" style="position: absolute; z-index: 10; height: 100%; width: 100%;
                                                                                 background-size: cover; background-repeat: no-repeat; opacity: 0; display: none;"></div>
 
-<div id="quitButton" style="position: absolute; z-index: 200; opacity: 0;
+<div id="quitButton" style="position: absolute; z-index: 200; opacity: 0; display: none;
                                 background-size: contain; background-repeat: no-repeat; background-image: url(img/navigation/quitButton.png);"></div>
 
 <div id="quitPage"
