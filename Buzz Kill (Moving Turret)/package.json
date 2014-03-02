@@ -1,0 +1,13 @@
+{
+  "name": "Buzz Kill",
+  "description": "Jump into a swirling ball of retro nostalgia and bee-blasting fun with Buzz Kill!",
+  "version": "1.11",
+  "main": "index.html",
+  "window": {
+    "icon": "Icon.png",
+    "toolbar": false,
+    "frame": false,
+    "show": false
+  },
+  "no-edit-menu": true
+}

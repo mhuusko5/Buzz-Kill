@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Portago';
+    font-style: normal;
+    font-weight: 400;
+    src: local('PortagoITC TT') url(Portago.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    overflow: hidden;
+}

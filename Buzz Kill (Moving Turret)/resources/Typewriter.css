@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'Typewriter';
+    src: url(Typewriter.eot);
+	src: local('itcamericantypewriterltmedium'),
+        url(Typewriter.ttf) format('truetype');
+    }
+body.cke_show_borders p {
+	font-family: 'Typewriter';
+    font-size: 30px;
+}
+.fontsforweb_fontid_2341 {
+	font-family: 'Typewriter' !important;
+}

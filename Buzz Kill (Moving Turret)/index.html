@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Buzz Kill</title>
+    <meta name="description"
+          content="Jump into a swirling ball of retro nostalgia and bee-blasting fun with Buzz Kill!">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+    <script src="resources/jquery-1.9.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="resources/joy.js"></script>
+    <script src="resources/jquery-ui.min.js"></script>
+    <script src="resources/jquery.ui.touch-punch.min.js"></script>
+    <script src="resources/modernizr-2.6.2.min.js"></script>
+    <script src="resources/jquery.typer.js"></script>
+    <script src="resources/leap.js"></script>
+    <script src="resources/mousetrap.min.js"></script>
+
+    <link rel="stylesheet" href="resources/Typewriter.css">
+    <link rel="stylesheet" href="resources/Portago.css">
+</head>
+<body style="background-image: url(img/navigation/backgroundTile.png); background-repeat: repeat;">
+
+<div id="gameplayImages" style="display: none;">
+
+</div>
+
+<div id="gameplaySounds" style="display: none;">
+
+</div>
+
+<div id="gameplayGifs" style="display: none;">
+
+</div>
+
+<div id="gameplayVideos" style="display: none;">
+
+</div>
+
+<div id="belowCanvasTemplate" style="display: none;">
+    <div id="honeycombBackground"></div>
+    <div id="betweenBoardAndGame"></div>
+</div>
+
+<div id="aboveCanvasTemplate" style="display: none;">
+    <div id="betweenGameAndBezel">
+    </div>
+
+    <div id="gameBezel">
+        <div id="gameDial">
+            <b id="latestScore"></b>
+            <b id="totalScore"></b>
+            <b id="pointsLabel"></b>
+        </div>
+
+        <div id="lives">
+            <div id="life1"></div>
+            <div id="life2"></div>
+            <div id="life3"></div>
+        </div>
+
+        <div id="joker"></div>
+        <div id="buzzkillLogo"></div>
+
+        <div id="levelIndicator"></div>
+        <div id="currentMoney"></div>
+
+        <div id="timerDiv"></div>
+
+        <div id="optionsButton"></div>
+
+        <div id="usables">
+            <div id="bombIcon"></div>
+            <div id="smokeIcon"></div>
+            <div id="forcefieldIcon"></div>
+        </div>
+    </div>
+</div>
+
+<div id="game" style="position: absolute; overflow: hidden; width:100%; height:100%; z-index: 100;">
+<div id="gamePlay" style="position: absolute;
+                              width: 100%; height: 100%;
+                              z-index: 0;">
+    <div id="belowCanvas" style="position: absolute;
+                                     width: 100%; height: 100%;
+                                     z-index: 0;">
+    </div>
+
+    <canvas id="gameCanvas" style="position: absolute;
+                                       z-index: 0;"></canvas>
+
+    <div id="aboveCanvas" style="position: absolute;
+                                     width: 100%; height: 100%;">
+    </div>
+</div>
+
+<div id="navigation" style="position: absolute;
+                                width: 100%; height: 100%;
+                                z-index: -1; opacity: 0;">
+
+<div id="initialPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/initialPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <style>
+        .door .front {
+            z-index: 900;
+            -webkit-transform: rotateX(0deg) rotateY(0deg);
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .door.flip .front {
+            z-index: 900;
+            -webkit-transform: rotateY(-180deg);
+        }
+
+        .door .back {
+            z-index: 800;
+            -webkit-transform: rotateY(180deg);
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .door.flip .back {
+            z-index: 1000;
+            -webkit-transform: rotateX(0deg) rotateY(0deg);
+        }
+
+        .swing .front, .swing .back {
+            -webkit-backface-visibility: visible;
+            -webkit-transition-duration: 1s;
+            -webkit-transform-origin: 0% 0;
+        }
+
+        .swing .front {
+            -webkit-transform: rotateY(0deg);
+        }
+
+        .swing .back {
+            -webkit-transform: rotateY(180deg) translateX(-100%);
+        }
+
+        .swing.flip .front {
+            -webkit-transform: rotateY(-180deg);
+        }
+
+        .swing.flip .back {
+            -webkit-transform: rotateY(0deg) translateX(-100%);
+        }
+    </style>
+    <div id="initialPageVaultDoor" class="swing door" style="position: absolute;
+                                                                                                     z-index: 2;">
+        <div id="initialPageVaultDoorFront" class="front" style="position: absolute;
+                                                        height: 100%; width: 100%;
+                                                        background-image: url(img/navigation/vaultDoorClosedLocked.png);
+                                                        background-size: cover;  background-repeat: no-repeat;">
+            <div id="initialPageVaultDoorFrontUnlocked" class="front" style="position: absolute;
+                                                        height: 100%; width: 100%;
+                                                        background-image: url(img/navigation/vaultDoorClosedUnlocked.png);
+                                                        background-size: cover;  background-repeat: no-repeat; display: none;">
+            </div>
+        </div>
+        <div id="initialPageVaultDoorBack" class="back" style="position: absolute;
+                                                        height: 100%; width: 100%;
+                                                        background-image: url(img/navigation/vaultDoorOpen.png);
+                                                        background-size: cover;  background-repeat: no-repeat;">
+        </div>
+    </div>
+    <div id="initialPagePlate" style="position: absolute;
+                                                                background-size: cover;  background-repeat: no-repeat; display: none;">
+        <div id="initialPagePlayButton" style="position: absolute;"></div>
+        <div id="initialPageBriefingButton" style="position: absolute;"></div>
+        <div id="initialPageOptionsButton" style="position: absolute;"></div>
+        <div id="initialPageGameplayButton" style="position: absolute;"></div>
+    </div>
+    <div id="initialPageOverlay" style="position: absolute; z-index: 5; height: 100%; width: 100%;
+                                                                                background-size: cover; background-repeat: no-repeat;
+                                                                                 background-image: url(img/navigation/buzzkillSplash.png); opacity: 0;"></div>
+</div>
+
+<div id="initialPageTutorialOverlay" style="position: absolute; width: 100%; height: 100%;
+                                               background-image: url(img/navigation/gesturesTitlePage.png);
+                                               background-size: cover; z-index: -1; opacity: 0; display: none;"></div>
+
+<div id="briefingPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/briefingPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <div id="briefingPlayButton" style="position: absolute;"></div>
+    <div id="briefingOptionsButton" style="position: absolute;"></div>
+    <div id="briefingGameplayButton" style="position: absolute;"></div>
+    <div id="briefingPageText" style="position: absolute; text-align: left; -webkit-user-select: none;"></div>
+
+    <div id="coverPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/coverPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    </div>
+</div>
+
+<div id="optionsPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/optionsPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <div id="optionsPlayButton" style="position: absolute;"></div>
+    <div id="optionsBriefingButton" style="position: absolute;"></div>
+    <div id="optionsGameplayButton" style="position: absolute;"></div>
+
+    <div id="optionsNewButton" style="position: absolute;"></div>
+    <div id="optionsQuitButton" style="position: absolute;"></div>
+
+    <div id="optionsShootingMethodButtons" style="position: absolute;">
+        <div id="optionsShootingMethodSingleButton" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-image: url(img/navigation/shootingMethodSliderSingle.png);
+                                                                    background-size: cover;  background-repeat: no-repeat;"></div>
+        <div id="optionsShootingMethodSemiButton" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-image: url(img/navigation/shootingMethodSliderSemi.png);
+                                                                    background-size: cover;  background-repeat: no-repeat;"></div>
+        <div id="optionsShootingMethodAutoButton" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-image: url(img/navigation/shootingMethodSliderAuto.png);
+                                                                    background-size: cover;  background-repeat: no-repeat;"></div>
+    </div>
+
+    <div id="optionsGameplaySoundButtons" style="position: absolute;">
+        <div id="optionsGameplaySoundOnButton" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-image: url(img/navigation/onSwitch.png);
+                                                                    background-size: cover;  background-repeat: no-repeat;"></div>
+        <div id="optionsGameplaySoundOffButton" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-image: url(img/navigation/offSwitch.png);
+                                                                    background-size: cover;  background-repeat: no-repeat;"></div>
+    </div>
+
+    <div id="optionsCloseButton" style="position: absolute;"></div>
+    <div id="optionsContinueButton" style="position: absolute;"></div>
+
+    <div id="optionsCreditsButton" style="position: absolute;"></div>
+</div>
+
+<div id="optionsCreditsPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/creditsPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <div id="optionsCreditsPlayButton" style="position: absolute;"></div>
+    <div id="optionsCreditsBriefingButton" style="position: absolute;"></div>
+    <div id="optionsCreditsGameplayButton" style="position: absolute;"></div>
+    <div id="optionsCreditsPageText" style="position: absolute;
+                                                                            color: #1ebe16; text-align:left; -webkit-user-select: none;"></div>
+
+    <div id="optionsCreditsContinueButton" style="position: absolute;"></div>
+
+    <div id="optionsCreditsOptionsButton" style="position: absolute;"></div>
+</div>
+
+<div id="gameplayPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/gameplayPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <div id="gameplayPlayButton" style="position: absolute;"></div>
+    <div id="gameplayBriefingButton" style="position: absolute;"></div>
+    <div id="gameplayOptionsButton" style="position: absolute;"></div>
+    <div id="gameplayGesturesButton" style="position: absolute;"></div>
+    <div id="gameplayGesturesPage" style="position: absolute; width: 100%; height: 100%; background-size: cover; background-image: url(img/navigation/gameplayGesturesPage.png);  z-index: -1; opacity: 0;"></div>
+    <div id="gameplayGetLeapPage" style="position: absolute; width: 100%; height: 100%; background-size: cover; background-image: url(img/navigation/gameplayGetLeapPage.png);  z-index: -1; opacity: 0;">
+        <div id="gameplayGetLeapClickable" style="position: absolute;"></div>
+    </div>
+</div>
+
+<div id="levelPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/levelPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <div id="levelPagePlayButton" style="position: absolute;"></div>
+    <div id="levelPageGameplayButton" style="position: absolute;"></div>
+    <div id="levelPageBriefingButton" style="position: absolute;"></div>
+    <div id="levelPageOptionsButton" style="position: absolute;"></div>
+    <div id="levelPageContinueButton" style="position: absolute;"></div>
+
+    <b id="levelPageName"></b>
+    <b id="levelPageTime"></b>
+    <b id="levelPageTimePar"></b>
+    <b id="levelPageTotalTime"></b>
+    <b id="levelPagePoints"></b>
+    <b id="levelPageShots"></b>
+    <b id="levelPageKills"></b>
+    <b id="levelPageRatio"></b>
+    <b id="levelPageDamage"></b>
+    <b id="levelPageBoss"></b>
+    <b id="levelPageWaves"></b>
+    <b id="levelPageRating"></b>
+</div>
+
+<div id="gameEndPage" style="position: absolute;
+                                width: 100%; height: 100%;
+                                background-image: url(img/navigation/gamewonPage.png);
+                                background-size: cover;  z-index: -1; opacity: 0;">
+    <div id="gameEndOptionsPage" style="position: absolute; width: 100%; height: 100%;
+                                background-image: url(img/navigation/gameEndOptionsPage.png);
+                                background-size: cover;  z-index: 1; display: none;"></div>
+    <div id="gameWinText"
+         style="position: absolute; display:none; text-align: left; z-index: 2; -webkit-user-select: none;"></div>
+</div>
+</div>
+
+<div id="gameOverlay" style="position: absolute; z-index: 10; height: 100%; width: 100%;
+                                                                                background-size: cover; background-repeat: no-repeat; opacity: 0; display: none;"></div>
+
+<div id="quitButton" style="position: absolute; z-index: 200; opacity: 0;
+                                background-size: contain; background-repeat: no-repeat; background-image: url(img/navigation/quitButton.png);"></div>
+
+<div id="quitPage"
+     style="position: absolute;width:100%; height:100%; z-index: 210; display: none; background-size: cover; background-repeat: no-repeat; background-image: url(img/navigation/quitPage.png);">
+    <div id="doQuit" style="position: absolute;"></div>
+    <div id="dontQuit" style="position: absolute;"></div>
+</div>
+
+<div id="gesturesButton" style="position: absolute; z-index: 200; opacity: 0;
+                                background-size: contain; background-repeat: no-repeat; background-image: url(img/navigation/gesturesButton.png);"></div>
+
+<div id="gesturesPage"
+     style="position: absolute;width:100%; height:100%; z-index: 210; display: none; background-size: cover; background-repeat: no-repeat; background-image: url(img/navigation/gesturesTitlePage.png);">
+</div>
+
+<div id="clicker" style="position: absolute;
+                            background-size: contain; background-repeat: no-repeat; background-image: url(img/gameplay/leapCursor.png);
+                            z-index: 250;"></div>
+</div>
+
+</body>
+
+<script src="js/startApp.js"></script>
+
+</html>
