@@ -16,7 +16,6 @@
 {
     [super viewWillAppear:animated];
 
-    self.webview.dataDetectorTypes = UIDataDetectorTypeLink;
     [self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"/Web"]]]];
 }
 

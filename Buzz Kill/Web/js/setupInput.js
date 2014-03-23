@@ -2,6 +2,11 @@
 ///////////GAMEINPUT///////////GAMEINPUT///////////GAMEINPUT//////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function devicePixel() {
+    return 1.0;
+    return window.devicePixelRatio || 1.0;
+}
+
 function resetGameplayInput() {
     gameplayBonus = function () {
 
@@ -45,15 +50,11 @@ function resetGameplayInput() {
 }
 resetGameplayInput();
 
-Mousetrap.bind('command+shift+5', function () {
-    gameplayBonus();
-});
-
 (function gamePointerLocation() {
     game.on('mouseMover', function (e) {
         gameplayPointerLocationCallback({
-            x: (window.devicePixelRatio || 1.0) * (e.x - gameCanvasOffset.x),
-            y: (window.devicePixelRatio || 1.0) * (e.y - gameCanvasOffset.y)
+            x: (devicePixel() || 1.0) * (e.x - gameCanvasOffset.x),
+            y: (devicePixel() || 1.0) * (e.y - gameCanvasOffset.y)
         });
     });
 })();
@@ -118,76 +119,74 @@ $document.on('doClick', function (e) {
     });
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////MOUSEINPUT/////////////////////MOUSEINPUT/////////////////////MOUSEINPUT/////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if ('ontouchstart' in document.documentElement) {
+    (function touchInput() {
+        function touch(e) {
+            e = e.originalEvent.touches[0];
 
-(function mouseInput() {
-    $document.on('mousemove', function (e) {
-        if (clickerDiv.vis) {
-            clickerDiv.css('opacity', 0);
-            clickerDiv.vis = false;
+            if (!clickerDiv.vis) {
+                clickerDiv.css('opacity', 0.81);
+                clickerDiv.vis = true;
+            }
+
+            clicker = {
+                x: e.pageX,
+                y: e.pageY
+            };
+
+            var gameClicker = normalizePointToDiv(clicker, game[0]);
+            clickerDiv.css('left', gameClicker.x - clickerDiv.width() / 2);
+            clickerDiv.css('top', gameClicker.y - clickerDiv.height() / 2);
+
+            gameplayPointerLocationCallback({
+                x: (devicePixel() || 1.0) * (clicker.x - gameCanvasOffset.x),
+                y: (devicePixel() || 1.0) * (clicker.y - gameCanvasOffset.y)
+            });
+
+            return false;
         }
 
-        $document.trigger({
-            type: 'doMouseMove',
-            pageX: e.pageX,
-            pageY: e.pageY
+        $document.on('touchstart', touch);
+        $document.on('touchmove', touch);
+
+        $document.on('touchend', function (e) {
+            $document.trigger({
+                type: 'doClick',
+                pageX: e.pageX,
+                pageY: e.pageY
+            });
+
+            return false;
+        });
+    })();
+} else {
+    (function mouseInput() {
+        $document.on('mousemove', function (e) {
+            if (clickerDiv.vis) {
+                clickerDiv.css('opacity', 0);
+                clickerDiv.vis = false;
+            }
+
+            $document.trigger({
+                type: 'doMouseMove',
+                pageX: e.pageX,
+                pageY: e.pageY
+            });
+
+            return false;
         });
 
-        return false;
-    });
+        $document.on('click', function (e) {
+            $document.trigger({
+                type: 'doClick',
+                pageX: e.pageX,
+                pageY: e.pageY
+            });
 
-    $document.on('click', function (e) {
-        $document.trigger({
-            type: 'doClick',
-            pageX: e.pageX,
-            pageY: e.pageY
+            return false;
         });
-
-        return false;
-    });
-})();
-
-(function touchInput() {
-    function touch(e) {
-        e = e.originalEvent.touches[0];
-
-        if (!clickerDiv.vis) {
-            clickerDiv.css('opacity', 0.81);
-            clickerDiv.vis = true;
-        }
-
-        clicker = {
-            x: e.pageX,
-            y: e.pageY
-        };
-
-        var gameClicker = normalizePointToDiv(clicker, game[0]);
-        clickerDiv.css('left', gameClicker.x - clickerDiv.width() / 2);
-        clickerDiv.css('top', gameClicker.y - clickerDiv.height() / 2);
-
-        gameplayPointerLocationCallback({
-            x: (window.devicePixelRatio || 1.0) * (clicker.x - gameCanvasOffset.x),
-            y: (window.devicePixelRatio || 1.0) * (clicker.y - gameCanvasOffset.y)
-        });
-
-        return false;
-    }
-
-    $document.on('touchstart', touch);
-    $document.on('touchmove', touch);
-
-    $document.on('touchend', function (e) {
-        $document.trigger({
-            type: 'doClick',
-            pageX: e.pageX,
-            pageY: e.pageY
-        });
-
-        return false;
-    });
-})();
+    })();
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////LEAPINPUT/////////////////////LEAPINPUT/////////////////////LEAPINPUT/////////////////////
@@ -240,8 +239,8 @@ if (window.forLeapStore) {
             clickerDiv[0].style.top = gameClicker.y - parseFloat(clickerDiv[0].style.height) / 2 + 'px';
 
             gameplayPointerLocationCallback({
-                x: (window.devicePixelRatio || 1.0) * (gameClicker.x - gameCanvasOffset.x),
-                y: (window.devicePixelRatio || 1.0) * (gameClicker.y - gameCanvasOffset.y)
+                x: (devicePixel() || 1.0) * (gameClicker.x - gameCanvasOffset.x),
+                y: (devicePixel() || 1.0) * (gameClicker.y - gameCanvasOffset.y)
             });
 
             var clickDepth = pointClickFinger.tipPosition[2];

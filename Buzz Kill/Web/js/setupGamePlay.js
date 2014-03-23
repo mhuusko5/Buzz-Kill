@@ -230,9 +230,9 @@ var gameCanvas = $('#gameCanvas');
     gameCanvas.css('opacity', 0.0);
 
     if (window.devicePixelRatio) {
-        gameCanvas[0].height *= window.devicePixelRatio;
-        gameCanvas[0].width *= window.devicePixelRatio;
-        gameCanvas[0].getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
+        //gameCanvas[0].height *= window.devicePixelRatio;
+        //gameCanvas[0].width *= window.devicePixelRatio;
+        //gameCanvas[0].getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
     }
 })();
 

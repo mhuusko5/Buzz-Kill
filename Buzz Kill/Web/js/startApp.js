@@ -1,5 +1,5 @@
 window.forLeapStore = false;
-window.forTesting = false;
+window.forTesting = true;
 
 window.loadScript = function (src) {
     var headID = document.getElementsByTagName("body")[0];

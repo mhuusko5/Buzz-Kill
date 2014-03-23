@@ -798,7 +798,7 @@ function createQueenBee(containingArray, getPoints, player) {
             'flying': [0, 1],
             'hit': [2, 2]
         },
-        framesPerSecond: 14
+        framesPerSecond: 2
     }).behave('bee');
 
     queenBee.player = player;
